@@ -41,7 +41,7 @@ module.exports = ".card {\r\n\tdisplay: flex;\r\n\talign-items: center;\r\n\tjus
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2>\n  Hand\n</h2>\n<div class=\"cards\">\n  <div class=\"card\" *ngFor=\"let card of hand\">\n    {{card.name}}\n  </div>\n</div>\n\n\n<div>\n</div>\n<div>\n  Money: ${{money}}\n</div>\n<div>\n  Victory points: {{victory}}\n  <button *ngIf=\"press\" (click)=\"prest()\">\n    Prestiege't!\n  </button>\n</div>\n<h2>\n  Buy:\n</h2>\n<div class=\"buy-list\">\n  <div *ngFor=\"let card of cards\">\n    <button class=\"card\" (click)=\"buy(card)\">\n      {{card.name}} : {{card.cost}}\n    </button>\n  </div>\n</div>\n\n<h2>\n  <div *ngIf=\"prestiege > 0\">\n    Prestiege {{prestiege}}, \n  </div>\n  Turn {{turnCount}}:\n</h2>\n<div *ngFor=\"let action of turnActions\">\n  {{action}}\n</div>"
+module.exports = "<h2>\n  Hand:\n</h2>\n<div class=\"cards\">\n  <div class=\"card\" *ngFor=\"let card of player?.hand\" [style.background-color]=\"getStyle(card)\">\n    {{card.name}}\n  </div>\n</div>\n\n\n<div>\n</div>\n<div>\n  Money: ${{player?.money}}\n</div>\n<div>\n  Victory points: {{player?.victory}} / {{victoryGoal}}\n  <button *ngIf=\"press\" (click)=\"prestiege()\">\n    Prestiege't!\n  </button>\n</div>\n<h2>\n  Buy:\n</h2>\n<div class=\"buy-list\">\n  <div *ngFor=\"let card of buyList\">\n    <button class=\"card\" (click)=\"player.buy(card)\" [style.background-color]=\"getStyle(card)\">\n      {{card.name}} : {{card.cost}}\n    </button>\n  </div>\n</div>\n\n<h2>\n  <div *ngIf=\"prestiege > 0\">\n    Prestiege {{player?.prestiegeCount}},\n  </div>\n  Turn {{player?.turnCount}}:\n</h2>\n<div *ngFor=\"let action of turnActions\">\n  {{action}}\n</div>"
 
 /***/ }),
 
@@ -65,102 +65,83 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
-        this.copper = { name: "Copper", type: cardType.treasure, value: 1, cost: 10 };
-        this.silver = { name: "Silver", type: cardType.treasure, value: 2, cost: 30 };
-        this.gold = { name: "Gold", type: cardType.treasure, value: 3, cost: 50 };
-        this.estate = { name: "Estate", type: cardType.victory, value: 1, cost: 20 };
-        this.province = { name: "Province", type: cardType.victory, value: 6, cost: 60 };
-        this.duchy = { name: "Duchy", type: cardType.victory, value: 3, cost: 50 };
-        this.village = { name: "Village", type: cardType.action, cost: 30 };
-        this.laboratory = { name: "Laboratory", type: cardType.action, cost: 50 };
-        this.smithy = { name: "Smithy", type: cardType.action, cost: 40 };
-        this.cards = [this.copper, this.silver, this.gold, this.estate, this.duchy, this.province, this.village, this.laboratory, this.smithy];
-        this.deck = [this.copper, this.copper, this.copper, this.copper, this.copper, this.copper, this.estate, this.estate, this.estate];
-        this.hand = [];
-        this.money = 0;
-        this.handSize = 5;
-        this.actions = 1;
-        this.prestiege = 0;
-        this.turnCount = 0;
+        this.cards = {
+            copper: new Card("Copper", cardType.treasure, 10, function (player, count) { return player.money += count; }),
+            silver: new Card("Silver", cardType.treasure, 30, function (player, count) { return player.money += 2 * count; }),
+            gold: new Card("Gold", cardType.treasure, 50, function (player, count) { return player.money += 3 * count; }),
+            estate: new Card("Estate", cardType.victory, 20, function (player, count) { return player.victory += 1 * count; }),
+            duchy: new Card("Duchy", cardType.victory, 50, function (player, count) { return player.victory += 3 * count; }),
+            province: new Card("Province", cardType.victory, 80, function (player, count) { return player.victory += 6 * count; }),
+            village: new Card("Village", cardType.action, 30, function (player, count) {
+                player.actionsLeft += 2 * count;
+                player.drawCards(count);
+            }),
+            laboratory: new Card("Laboratory", cardType.action, 50, function (player, count) {
+                player.actionsLeft += count;
+                player.drawCards(2 * count);
+            }),
+            smithy: new Card("Smithy", cardType.action, 40, function (player, count) {
+                player.drawCards(3 * count);
+            })
+        };
+        this.defaultDeck = [
+            this.cards.copper,
+            this.cards.copper,
+            this.cards.copper,
+            this.cards.copper,
+            this.cards.copper,
+            this.cards.copper,
+            this.cards.copper,
+            this.cards.estate,
+            this.cards.estate,
+            this.cards.estate
+        ];
         this.turnActions = [];
-        this.victory = 3;
         this.speed = 3000;
         this.press = false;
+        this.buyList = Object.values(this.cards);
+        this.victoryGoal = 2000;
+        this.player = new Player();
     }
-    AppComponent.prototype.shuffleArray = function (array) {
-        for (var i = array.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            _a = [array[j], array[i]], array[i] = _a[0], array[j] = _a[1];
-        }
-        var _a;
-    };
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        setTimeout(function () { return _this.newHand(); }, 0);
+        this.player.deck = this.defaultDeck.slice();
+        setTimeout(function () { return _this.tick(); }, 0);
     };
-    AppComponent.prototype.getCardType = function (array, type) {
-        return array.filter(function (card) { return card.type === type; });
-    };
-    AppComponent.prototype.addValues = function (cards, init) {
-        if (init === void 0) { init = 0; }
-        return cards.map(function (card) { return card.value; })
-            .reduce(function (c1, c2) { return c1 + c2; }, init);
-    };
-    AppComponent.prototype.newHand = function () {
+    AppComponent.prototype.tick = function () {
         var _this = this;
-        this.shuffleArray(this.deck);
         this.turnActions = [];
-        this.turnCount++;
-        var end = this.handSize;
-        this.hand = this.deck.slice(0, end);
-        var actions = this.actions;
+        this.player.newTurn();
         var treasures = 0;
-        for (var i = 0; i < this.hand.length; i++) {
-            if (actions < 1)
-                break;
-            if (this.hand[i].type === cardType.action) {
-                actions--;
-                var action = this.hand[i];
-                this.turnActions.push("Played " + action.name);
-                if (action.name === "Village") {
-                    end++;
-                    actions += 2;
-                }
-                if (action.name === "Laboratory") {
-                    end += 2;
-                    actions++;
-                }
-                if (action.name === "Smithy") {
-                    end += 3;
-                }
-                this.hand = this.deck.slice(0, end);
+        for (var i = 0; i < this.player.hand.length; i++) {
+            var next = this.player.hand[i];
+            if (next.type !== cardType.action || this.player.actionsLeft > 0) {
+                if (next.type)
+                    this.player.actionsLeft--;
+                this.player.hand[i].effect(this.player, 1);
+                this.turnActions.push("Played " + next.name);
             }
-            ;
         }
-        treasures += this.addValues(this.getCardType(this.hand, cardType.treasure));
-        this.money += treasures;
-        this.turnActions.push("Played " + treasures + " coins");
-        setTimeout(function () { return _this.newHand(); }, this.speed);
-    };
-    AppComponent.prototype.buy = function (card) {
-        if (this.money >= card.cost) {
-            this.money -= card.cost;
-            this.deck.push(card);
-        }
-        this.victory = this.addValues(this.getCardType(this.deck, cardType.victory));
-        if (this.victory > 50) {
+        if (this.player.victory > this.victoryGoal) {
             this.press = true;
         }
+        setTimeout(function () { return _this.tick(); }, this.speed);
     };
-    AppComponent.prototype.prest = function () {
-        this.deck = [this.copper, this.copper, this.copper, this.copper, this.copper, this.copper, this.estate, this.estate, this.estate];
+    AppComponent.prototype.prestiege = function () {
         this.speed /= 2;
-        this.handSize++;
-        this.prestiege++;
-        this.actions++;
-        this.turnCount = 0;
-        this.money = 0;
         this.press = false;
+        this.player.prestiege();
+        this.player.deck = this.defaultDeck.slice();
+    };
+    AppComponent.prototype.getStyle = function (card) {
+        switch (card.type) {
+            case cardType.treasure:
+                return "#ff3";
+            case cardType.victory:
+                return "#3f3";
+            case cardType.action:
+                return "#77f";
+        }
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -172,6 +153,72 @@ var AppComponent = /** @class */ (function () {
     return AppComponent;
 }());
 
+var Player = /** @class */ (function () {
+    function Player() {
+        this.deck = [];
+        this.hand = [];
+        this.handSize = 5;
+        this.actions = 1;
+        this.turnCount = 0;
+        this.money = 0;
+        this.victory = 0;
+        this.prestiegeCount = 0;
+        this.cardsInHand = 0;
+    }
+    Player.prototype.reset = function () {
+        this.deck = [];
+        this.hand = [];
+        this.turnCount = 0;
+        this.money = 0;
+        this.victory = 0;
+    };
+    Player.prototype.prestiege = function () {
+        this.reset();
+        this.actions++;
+        this.handSize++;
+        this.prestiegeCount++;
+    };
+    Player.prototype.addToDeck = function (card) {
+        this.deck.push(card);
+    };
+    Player.prototype.buy = function (card) {
+        if (this.money >= card.cost) {
+            this.money -= card.cost;
+            this.deck.push(card);
+        }
+    };
+    Player.prototype.shuffleArray = function (array) {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            _a = [array[j], array[i]], array[i] = _a[0], array[j] = _a[1];
+        }
+        var _a;
+    };
+    Player.prototype.drawCards = function (cards) {
+        this.cardsInHand += cards;
+        this.hand = this.deck.slice(0, this.cardsInHand);
+    };
+    Player.prototype.newTurn = function () {
+        this.shuffleArray(this.deck);
+        this.cardsInHand = 0;
+        this.drawCards(this.handSize);
+        this.turnCount++;
+        this.actionsLeft = this.actions;
+    };
+    return Player;
+}());
+var Card = /** @class */ (function () {
+    function Card(name, type, cost, effect) {
+        this.name = name;
+        this.type = type;
+        this.cost = cost;
+        this.effect = effect;
+    }
+    Card.prototype.getCardType = function (array, type) {
+        return array.filter(function (card) { return card.type === type; });
+    };
+    return Card;
+}());
 var cardType;
 (function (cardType) {
     cardType[cardType["treasure"] = 0] = "treasure";
