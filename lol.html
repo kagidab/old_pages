@@ -1,0 +1,139 @@
+<html>
+
+<head>
+</head>
+
+<body>
+	<canvas id="canvas" width="1500" height="1500"></canvas>
+	<script>
+		
+		function modSq(z){
+			return z.r*z.r+z.i*z.i;
+		}
+
+		function theta(z){
+			if (z.i == 0) return z.r >=0 ? 0: PI;
+			else if (z.r < 0){
+				return PI + Math.atan(z.i/z.r)
+			} else return z.i >0 ? Math.atan(z.i/z.r): 2*PI+Math.atan(z.i/z.r);
+		}
+
+		class Complex {
+			
+			constructor(real, imag){
+				this.r = real; this.i = imag;
+			}
+
+			add(toAdd){
+				return new Complex(toAdd.r+this.r, toAdd.i+this.i);
+			}
+
+			multiply(mult){
+				return new Complex(this.r*mult.r-this.i*mult.i, this.r*mult.i+this.i*mult.r);
+			}
+
+			pow(power){
+				const m = Math.pow(modSq(this), power / 2);
+				const th = (theta(this) * power + 100 * PI) % (2 * PI);
+				return new Complex(m * Math.cos(th), m * Math.sin(th));
+				//(1+i)(1+i)=>2i
+			}
+
+		}
+
+		const PI = 3.141592653589793;
+		let wid = canvas.width;
+		let hei = canvas.height;
+		let minx=-2, maxx=2;
+		let miny=-2, maxy=2;
+		let grid = Array(hei).fill().map(z=>Array(wid).fill(0));
+		let grad = Array(hei).fill().map(z=>Array(wid).fill(0));
+		let c = Array(hei).fill().map(z=>Array(wid).fill(0));
+
+		for(let i=0; i < hei; i++){
+			for(let j=0; j < wid; j++){
+				let xval = minx + j*(maxx-minx) / wid;
+				let yval = miny + i*(maxy-miny) / hei;
+				grid[i][j] = new Complex(xval, yval);
+				c[i][j] = new Complex(xval, yval);
+				//if(i==hei/2) console.log(grid[i][j].r);
+			}
+		}
+
+		function complexToRC(z){
+			let row = Math.floor((z.i+2)/4 * hei);
+
+			let col = Math.floor((z.r+2)/4 * wid);
+			//console.log(z, row,col, "Test")
+			return [row, col];
+		}
+		function logistic(x){
+			return 255/(1+Math.exp(-2*(x-10)));
+		}
+		function cat(){
+			var canvas = document.getElementById('canvas');
+			
+		  	if (canvas.getContext) {
+		    	var ctx = canvas.getContext('2d');
+		    	//ctx.drawImage(img, 0, 0);
+				//img.style.display = 'none';
+				var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+				var data = imageData.data;
+		    	var size = 1;
+		    	let points = 1e5;
+		    	let iter = 100;
+
+		    	for(let i=0; i<points; i++){
+		    		let point = new Complex(Math.random()*4-2, Math.random()*4-2);
+		    		let cc = new Complex(point.r, point.i);
+		    		for(let i=0; i < iter; i++){
+
+		    			point = point.multiply(point).add(cc);
+		    			
+		    			
+		    			if(modSq(point)>4) break;
+		    			let rc = complexToRC(point);
+		    			//console.log(point, cc, rc)
+		    			grad[rc[0]][rc[1]]++;
+		    		}
+		    	}
+
+
+		    	for(let i=0; i < hei; i++){
+		    		for(let j=0; j < wid; j++){
+		    			//grid[i][j] = grid[i][j].pow(6).add(c[i][j]);
+		    			data[(i*wid+j)*4] = 0;
+		    			data[(i*wid+j)*4+1] = 0
+		    			data[(i*wid+j)*4+2] = 255*Math.abs(Math.sin(grad[i][j]/1000))%255;
+		    			data[(i*wid+j)*4+3] = 255
+
+		    		}
+		    	}
+
+		    	/*for(let i=0; i < hei; i++){
+		    		for(let j=0; j < wid; j++){
+		    			//grid[i][j] = grid[i][j].pow(6).add(c[i][j]);
+		    			data[(i*wid+j)*4] = Math.floor(Math.abs(grid[i][j].r*100))%255;
+		    			data[(i*wid+j)*4+1] = Math.floor(Math.abs(grid[i][j].i*100))%255;
+		    			data[(i*wid+j)*4+2] = Math.floor(Math.abs(modSq(grid[i][j])*100))%255;
+		    			data[(i*wid+j)*4+3] = 255
+
+		    		}
+		    	}*/
+
+		    	//for(var i=0; i < data.length; i+=4){
+		    			//data[i] = Math.abs(data[i]);
+		    			//ctx.fillRect(i*size, j*size, i*size+size, j*size+size);
+		    		
+		    	//}
+		    	ctx.putImageData(imageData, 0, 0);
+		    	
+		    	//ctx.clearRect(45, 45, 60, 60);
+		    	//ctx.strokeRect(50, 50, 50, 50);
+		  	}
+		  	setTimeout(()=>cat(), 200);
+	  }
+	  cat();
+	</script>
+</body>
+</html
