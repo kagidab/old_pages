@@ -17,7 +17,7 @@ let objects = {
     hidden: true
   },
   border: {
-    position: {top: 430, left:410}, 
+    position: {top: 425, left:414}, 
     src: "border.png",
     action: null
   },
@@ -375,7 +375,7 @@ function play(){
 let zones = {
   top: {
     src: "hamtop.png",
-    position: {left: 272, top: 343}
+    position: {left: 272, top: 352}
   },
   ladder: {
     src: "hamladder.png",
@@ -496,7 +496,7 @@ function chargeBattery(){
     removeClass(objects.yellow, "slow-flash");
     finished = true;
     hunger = 3;
-    transition(zones.bottom);
+    transition(zones.top);
   } else setTimeout(chargeBattery, 100)
 }
 
