@@ -6,6 +6,10 @@ img {
   user-select: none;
 }
 
+.empty {
+  transform: scaley(0);
+}
+
 .wobble {
   animation: wobble 1s infinite;
 }
@@ -47,6 +51,7 @@ img {
     -webkit-animation:fillbar-horizontal-tofull 3s linear;
     -moz-animation:fillbar-horizontal-tofull 3s linear;
     animation:fillbar-horizontal-tofull 3s linear;
+    -webkit-animation-fill-mode: forwards;
     transform-origin: left;
 }
 

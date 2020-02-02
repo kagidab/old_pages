@@ -1,0 +1,154 @@
+{ "airlock": {
+    "position": {"top": 432, "left":413}, 
+    "src": "unflooded.png"
+  },
+  "flood": {
+    "position": {"top": 375, "left":420}, 
+    "src": "water.png", 
+    "hidden": "true"
+  },
+  "border": {
+    "position": {"top": 425, "left":414}, 
+    "src": "border.png"
+  },
+  "background": {
+    "position": {"top": 8, "left":8}, 
+    "src": "background.png"
+  },
+  "heart": {
+    "position": {"top":333, "left": 280},
+    "src": "heart.png", 
+    "hidden":"true"
+  },
+  "yellow": {
+    "position": {"top": 323, "left":165}, 
+    "src": "yellow.png"
+  },
+  "grass": {
+    "position": {"top": 380, "left":592}, 
+    "src": "grass.png"
+  },
+  "ladder": {
+    "position": {"top": 380, "left":300}, 
+    "src": "ladder.png"
+  },
+  "clockface": {
+    "position": {"top": 60, "left":635}, 
+    "src": "clockface.png"
+  },
+  "clockhand": {
+    "position": {"top": 60, "left":635}, 
+    "src": "clockhand.png"
+  },
+  "wheel": {
+    "position": {"top": 413, "left":168}, 
+    "src": "wheel.png"
+  },
+  "wheelstand": {
+    "position": {"top": 465, "left":176}, 
+    "src": "wheelstand.png" 
+  },
+  "insideDoor": {
+    "position": {"top": 450, "left": 425}, 
+    "src": "insidedoor.png"
+  },
+  "greenLight": {
+    "position": {"top": 314, "left": 125}, 
+    "src": "green.png"
+  },
+  "greenDoor": {
+    "position": {"top": 434, "left": 410}, 
+    "src": "smallgreen.png"
+  },
+  "greenPump": {
+    "position": {"top": 203, "left": 234}, 
+    "src": "green.png"
+  },
+  "barfillLight": {
+    "position": {"top": 310, "left": 120}, 
+    "src": "battery.png"
+  },
+  "barfillDoor": {
+    "position": {"top": 430, "left": 405}, 
+    "src": "smallbattery.png"
+  },
+  "barfillPump": {
+    "position": {"top": 200, "left": 230}, 
+    "src": "battery.png"
+  },
+  "drain": {
+    "position": {"top": 498, "left": 480}, 
+    "src": "drain.png"
+  },
+  "eject": {
+    "position": {"top": 44, "left": 280},
+    "src": "eject.png",
+    "hidden": "true"
+  },
+  "retry": {
+    "position": {"top": 44, "left": 280},
+    "src": "retry.png",
+    "hidden": "true"
+  },
+  "spacesuit": {
+    "position": {"top": 500, "left": 500}, 
+    "src": "spacesuit.png"
+  },
+  "outsideDoor": {
+    "position": {"top": 470, "left": 530}, 
+    "src": "outsidedoor.png"
+  },
+  "bubble3": {
+    "position": {"top": 410, "left": 565}, 
+    "src": "bubble1.png", 
+    "hidden": "true"
+  },
+  "bubble2": {
+    "position": {"top": 433, "left": 555}, 
+    "src": "bubble2.png", 
+    "hidden": "true"
+  },
+  "bubble1": {
+    "position": {"top": 456, "left": 560}, 
+    "src": "bubble3.png", 
+    "hidden": "true"
+  },
+  "ham": {
+    "position": {"top": 280, "left":350}, 
+    "src": "hamtop.png"
+  },
+  "stick": {
+    "position": {"top": 348, "left":260}, 
+    "src": "stick.png"
+  },
+  "food": {
+    "position": {"top": 348, "left":260}, 
+    "src": "food.png", 
+    "hidden": "true"
+  },
+  "fish": {
+    "position": {"top": 494, "left":598}, 
+    "src": "fish.png"
+  },
+  "redbit": {
+    "position": {"top": 0, "left": 0},
+    "src": "redbit.png",
+    "hidden": "true"
+  },
+  "greenham": {
+    "position": {"top": 0, "left": 0},
+    "src": "greenham.png",
+    "hidden": "true"
+  },
+  "battery": {
+    "position": 
+    {"top": 0, "left": 0},
+    "src": "hambattery.png",
+    "hidden": "true"
+  },
+  "playagain": {
+    "position": {"left": 348, "top": 338},
+    "src": "playagain.png",
+    "hidden": "true"
+  }
+} 

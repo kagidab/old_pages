@@ -1,0 +1,26 @@
+{
+  "wheel": {
+    "name": "wheel", 
+    "src":"hamsterwheel.mp3" 
+  },
+  "battery1": {
+    "name":"battery1",
+    "src":"battery1.mp3" 
+  },
+  "battery2": {
+    "name":"battery2",
+    "src":"battery2.mp3" 
+  },
+  "youlose": {
+    "name":"youlose",
+    "src":"youlose.mp3" 
+  },
+  "win": {
+    "name":"win",
+    "src":"winnoise.mp3" 
+  },
+  "music": {
+    "name":"music",
+    "src": "pond.mp3" 
+  }
+}

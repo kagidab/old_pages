@@ -1,0 +1,27 @@
+{
+  "top": {
+    "src": "hamtop.png",
+    "position": {"left": "272", "top": "352"}
+  },
+  "bottom": {
+    "src": "hambottom.png",
+    "position": {"left": "320", "top": "517"}
+  },
+  "wheel": {
+    "src": "hamwheel.png",
+    "position": {"left": "240", "top": "488"}
+  },
+  "airlock": {
+    "src": "hambottom.png",
+    "position": {"left": "440", "top": "500"}
+  },
+  "outside": {
+    "src": "hamoutside.png",
+    "position": {"left": "560", "top": "500"}
+  },
+  "submarine": {
+    "src": "submarine.png",
+    "position": {"left": "640", "top": "400"}
+  }
+}
+
