@@ -1,0 +1,225 @@
+img {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.wobble {
+  animation: wobble 1s infinite;
+}
+
+.wobblestep {
+  animation: wobblestep 2s infinite;
+}
+
+.spin {
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+
+.fillbar {
+    -webkit-animation:fillbar 3s linear;
+    -moz-animation:fillbar 3s linear;
+    animation:fillbar 3s linear;
+    transform-origin: bottom;
+}
+
+.fillbar-horizontal {
+    -webkit-animation:fillbar-horizontal 3s linear;
+    -moz-animation:fillbar-horizontal 3s linear;
+    animation:fillbar-horizontal 3s linear;
+    animation-fill-mode: forwards;
+    transform-origin: left;
+}
+
+.fillbar-horizontal-tohalf {
+    -webkit-animation:fillbar-horizontal-tohalf 3s linear;
+    -moz-animation:fillbar -horizontal-tohalf 3s linear;
+    animation:fillbar-horizontal-tohalf  3s linear;
+    -webkit-animation-fill-mode: forwards;
+    transform-origin: left;
+}
+
+.fillbar-horizontal-tofull {
+    -webkit-animation:fillbar-horizontal-tofull 3s linear;
+    -moz-animation:fillbar-horizontal-tofull 3s linear;
+    animation:fillbar-horizontal-tofull 3s linear;
+    transform-origin: left;
+}
+
+.clock-spin {
+    -webkit-animation:spin 60s linear;
+    -moz-animation:spin 60s linear;
+    animation:spin 60s linear;
+}
+
+.slow-flash {
+    -webkit-animation:flash 4.5s infinite;
+    -moz-animation:flash 4.5s infinite;
+    animation:flash 4.5s infinite;
+}
+
+.dark-flash {
+    -webkit-animation:dark-flash 4.5s infinite;
+    -moz-animation:dark-flash 4.5s infinite;
+    animation:dark-flash 4.5s infinite;
+}
+
+.flash {
+    -webkit-animation:flash 1.5s linear infinite;
+    -moz-animation:flash 1.5s linear infinite;
+    animation:flash 1.5s linear infinite;
+}
+
+.poke {
+    -webkit-animation:poke 1.5s;
+    -moz-animation:poke 1.5s;
+    animation:poke 1.5s;
+}
+
+.fly-away {
+    -webkit-animation:fly-away 4.5s linear ;
+    -moz-animation:fly-away 4.5s linear;
+    animation:fly-away 4.5s linear;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.fish-away {
+    -webkit-animation:fish-away 3.5s; 
+    -moz-animation:fish-away 3.5s ;
+    animation:fish-away 3.5s ;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.fill {
+    -webkit-animation:fillbar 3s; 
+    -moz-animation:fillbar 3s ;
+    animation:fillbar 3s;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.drain {
+    -webkit-animation:drain 3.5s; 
+    -moz-animation:drain 3.5s ;
+    animation:drain 3.5s;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    transform-origin: bottom;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+
+@-moz-keyframes flash { 50% { opacity: 0; } }
+@-webkit-keyframes flash { 50% { opacity: 0; } }
+@keyframes flash { 50% { opacity: 0; } }
+
+@-moz-keyframes dark-flash { 50% { opacity: 0; } }
+@-webkit-keyframes dark-flash { 50% { opacity: 0; } }
+@keyframes dark-flash { 
+0% { opacity: 1; } 
+50% { opacity: .5; } 
+100% { opacity: 1; } 
+}
+
+@-moz-keyframes fly-away { 100% { -moz-transform: translatey(-500px); } }
+@-webkit-keyframes fly-away { 100% { -webkit-transform: translatey(-500px); } }
+@keyframes fly-away { 100% { -webkit-transform: translatey(-500px); transform:translatey(-500px); } }
+
+@-moz-keyframes poke { 
+  50% {
+    -moz-transform: translate(15px, -10px) rotate(90deg); 
+  }
+}
+
+@-webkit-keyframes poke { 
+  50% {
+    -webkit-transform: translate(15px, -10px) rotate(90deg); 
+  }
+}
+
+@keyframes poke { 
+  50% {
+    -webkit-transform: translate(15px, -10px) rotate(90deg); 
+    transform: translate(15px, -10px) rotate(90deg); 
+  }
+}
+
+@-moz-keyframes fish-away { 100% { -moz-transform: translate(-180px, 40px); } }
+@-webkit-keyframes fish-away { 100% { -webkit-transform: translate(-180px, 40px); } }
+@keyframes fish-away { 100% { -webkit-transform: translate(-180px, 40px); transform:translate(-180px, 40px); } }
+
+@-moz-keyframes drain { 
+  0% { -moz-transform: scaley(1) }
+  100% { -moz-transform: scaley(0) }
+}
+@-webkit-keyframes drain { 
+  0% { -webkit-transform: scaley(1) }
+  100% { -webkit-transform: scaley(0) }
+}
+@keyframes drain { 
+  0% { transform: scaley(1) }
+  100% { transform: scaley(0) }
+}
+
+@-moz-keyframes fill { 
+  100% { -moz-transform: translatey(-120px); } 
+}
+@-webkit-keyframes fill { 
+  100% { -webkit-transform: translatey(-120px); } 
+}
+
+@keyframes fill { 
+  100% { -webkit-transform: translatey(-120px); transform:translatey(-120px); } 
+}
+
+@-moz-keyframes fillbar { 
+  0% { -moz-transform: scaley(0) }
+  100% { -moz-transform: scaley(1) }
+}
+@-webkit-keyframes fillbar { 
+  0% { -webkit-transform: scaley(0) }
+  100% { -webkit-transform: scaley(1) }
+}
+@keyframes fillbar { 
+  0% { transform: scaley(0) }
+  100% { transform: scaley(1) }
+}
+
+@keyframes wobble {
+  50% { 
+    transform: rotate(20deg);
+  }
+}
+
+@keyframes wobblestep {
+  25% { 
+    transform:translate(10px, -5px); 
+  }
+  50% { 
+    transform:translate(10px, -5px) rotate(20deg);
+  }
+  75% { 
+    transform:translate(10px, -5px); 
+  }
+}
+
+@keyframes fillbar-horizontal { 
+  0% { transform: scalex(0) }
+  100% { transform: scalex(1) }
+}
+@keyframes fillbar-horizontal-tohalf { 
+  0% { transform: scalex(0) }
+  100% { transform: scalex(.5) }
+}
+@keyframes fillbar-horizontal-tofull { 
+  0% { transform: scalex(.5) }
+  100% { transform: scalex(1) }
+}
