@@ -37,11 +37,9 @@ function newCircle(){
   while(circle.x - circle.size < 0 || circle.x + circle.size > WIDTH || circle.y - circle.size < 0 || circle.y + circle.size > HEIGHT || inter(circle, circles)){
     circle.size /= 1.5; // do binary search instead
     if(circle.size < 5) {
-      giveup = true; break;
+      setTimeout(newCircle, 10);
+      return;
     }
-  }
-  if(giveup) {
-    //i--; continue;
   }
 
   if(Math.random() < 0.5){
@@ -58,10 +56,11 @@ function newCircle(){
   circles.push(circle);
   setTimeout(newCircle, 10);
 }
+
 window.onload = function() {
   canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = true;
-ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingEnabled = true;
   newCircle();
 }
