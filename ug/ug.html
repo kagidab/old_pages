@@ -1,0 +1,27 @@
+<html>
+    <head>
+    </head>
+        <script>
+            /**
+              * @param {String} url - address for the HTML to fetch
+              * @return {String} the resulting HTML string fragment
+              */
+            async function fetchHtmlAsText(url) {
+                return await (await fetch(url)).text();
+            }
+
+            async function loadSong() {
+                const songDiv = document.getElementById("song");
+                url = document.getElementById("songUrl").value
+                songDiv.innerHTML = await fetchHtmlAsText(url);
+            }
+        </script>
+    <body>
+        <form onsubmit="loadSong();return false">
+            <input id="songUrl">
+            <input type="submit">
+
+        </form>
+        <div id="song" />
+    </body>
+</html>
