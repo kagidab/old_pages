@@ -1,6 +1,5 @@
 <html>
     <head>
-    </head>
         <script>
             /**
               * @param {String} url - address for the HTML to fetch
@@ -16,6 +15,8 @@
                 songDiv.innerHTML = await fetchHtmlAsText(url);
             }
         </script>
+    </head>
+
     <body>
         <form onsubmit="loadSong();return false">
             <input id="songUrl">
