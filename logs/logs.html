@@ -73,8 +73,8 @@ function displayContents(contents) {
     mode_dash[0] = new Date(last(currents)[0]);
     modes.push(mode_dash);
 
-    console.log(modes);
-    console.log(currents);
+    //console.log(modes);
+    //console.log(currents);
 
     let mode_data = google.visualization.arrayToDataTable(modes);
     let mode_options = {
@@ -91,6 +91,7 @@ function displayContents(contents) {
     let current_options = {
       title: 'Current (mA)',
       hAxis: {title: 'Time',  titleTextStyle: {color: '#333'}},
+        vAxis: {viewWindow: { min: 160, max: 210}},
       explorer: { 
         actions: ['dragToZoom', 'rightClickToReset'],
         axis: 'horizontal',
